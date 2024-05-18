@@ -2,7 +2,7 @@ pipeline {
     agent none
     stages {
         stage('Build - DinD') {
-            agent { label 'dind' }
+            agent any 
             steps {
                 sh 'docker network create exp-mango-network'
             }
