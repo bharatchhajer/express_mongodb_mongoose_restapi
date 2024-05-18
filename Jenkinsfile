@@ -10,7 +10,7 @@ pipeline {
         stage('Build - MongoDB') {
             agent { docker { 
                         image 'mongodb/mongodb-community-server:latest' 
-                        args '-p 27017:27017 --name mongo --network exp-mango-network'
+                        args '-p 27017:27017 --name mongo --network exp-mango-network -d'
                 } }
             steps {
                 sh 'mongod --version'
