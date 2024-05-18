@@ -15,6 +15,7 @@ pipeline {
             steps {
                 sh 'node --version'
                 sh 'npm install'
+                sh 'export NODE_ENV=test'
                 sh 'npm test'
             }
         }
