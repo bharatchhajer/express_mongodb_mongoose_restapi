@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'jest --detectOpenHandles'
+                sh 'npm test'
             }
         }
     }
