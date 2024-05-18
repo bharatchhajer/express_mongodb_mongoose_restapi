@@ -14,7 +14,7 @@ pipeline {
                 sh 'docker network create exp-mango-network'
             }
         }
-        stage(){
+        stage( 'Test'){
             agent any
             steps {
                 sh 'docker run -p 27017:27017 --name mongo --network exp-mango-network  -d mongodb/mongodb-community-server:latest'
