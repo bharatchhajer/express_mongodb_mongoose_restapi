@@ -1,32 +1,24 @@
 pipeline {
     agent none
     stages {
-        stage('Build - DinD') {
+        stage('Build - rm network') {
             agent any 
             steps {
                 sh 'docker network rm exp-mango-network'
                 sh 'docker network create exp-mango-network'
             }
         }
-        stage('Build - MongoDB') {
-            agent { docker { 
-                        image 'mongodb/mongodb-community-server:latest' 
-                        args '-p 27017:27017 --name mongo --network exp-mango-network -d'
-                } }
+        stage('Build - add network') {
+            agent any 
             steps {
-                sh 'mongod --version'
+                sh 'docker network create exp-mango-network'
             }
         }
-        stage('Build and Test App') {
-            agent { docker { 
-                        image 'node:20.11.1-alpine3.19' 
-                        args '--network exp-mango-network'
-            } }
+        stage(){
+            agent any
             steps {
-                sh 'node --version'
-                sh 'npm install'
-                sh 'export NODE_ENV=test'
-                sh 'npm test'
+                sh 'docker run -p 27017:27017 --name mongo --network exp-mango-network  -d mongodb/mongodb-community-server:latest'
+                sh 'docker run -p 8080:3000 --name mongo-restapi --network exp-mango-network  bharatchhajer/express-mongodb-mongoose-restapi:1.0.0'
             }
         }
     }
