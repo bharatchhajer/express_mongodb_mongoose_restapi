@@ -1,7 +1,7 @@
 pipeline {
     agent none
     stages {
-        stage('Build n Test') {
+        stage('Build Test') {
             agent any 
             steps {
                 sh 'docker network create exp-mango-network2'
